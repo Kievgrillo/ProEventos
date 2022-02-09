@@ -1,8 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace ProEventos.API.Data.Migrations
+namespace ProEventos.API.Data.migrations
 {
-    public partial class initialapi : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
