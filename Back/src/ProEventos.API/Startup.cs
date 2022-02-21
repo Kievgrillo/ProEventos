@@ -27,6 +27,7 @@ namespace ProEventos.API
         {
             services.AddDbContext<ProEventosContext>
             (context => context.UseSqlServer(Configuration.GetConnectionString("Default")));
+            //para intemrromper o loop de dados, foi add o NewTonsoftJson
             services.AddControllers()
                     .AddNewtonsoftJson(
                         x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
