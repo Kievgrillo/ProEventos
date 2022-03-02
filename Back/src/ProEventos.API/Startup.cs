@@ -6,10 +6,12 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
 using ProEventos.Persistence.Contexto;
-using ProEventos.Application;
 using ProEventos.Persistence.Contratos;
 using ProEventos.Persistence;
 using ProEventos.Application.Contratos;
+using AutoMapper;
+using System;
+using ProEventos.Application;
 
 namespace ProEventos.API
 {
@@ -17,23 +19,25 @@ namespace ProEventos.API
     {
         public Startup(IConfiguration configuration) 
         {
-            this.Configuration = configuration;
+            Configuration = configuration;
                
         }
                 public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ProEventosContext>
             (context => context.UseSqlServer(Configuration.GetConnectionString("Default")));
             //para intemrromper o loop de dados, foi add o NewTonsoftJson
+
             services.AddControllers()
                     .AddNewtonsoftJson(
                         x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
 
-            services.AddScoped<IEventoService, EventoService>();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddScoped<IEventoService, EventosService>();
             services.AddScoped<IGeralPersit, GeralPersist>();
             services.AddScoped<IEventoPersist, EventoPersist>();
 
@@ -44,7 +48,6 @@ namespace ProEventos.API
             });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
