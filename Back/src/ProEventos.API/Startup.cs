@@ -1,53 +1,48 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using Microsoft.EntityFrameworkCore;
-using ProEventos.Persistence.Contexto;
-using ProEventos.Persistence.Contratos;
-using ProEventos.Persistence;
+using ProEventos.Application;
 using ProEventos.Application.Contratos;
+using ProEventos.Persistence;
+using ProEventos.Persistence.Contratos;
 using AutoMapper;
 using System;
-using ProEventos.Application;
+using ProEventos.Persistence.Contexto;
 
 namespace ProEventos.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) 
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
-               
         }
-                public IConfiguration Configuration { get; }
-
+        public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ProEventosContext>
-            (context => context.UseSqlServer(Configuration.GetConnectionString("Default")));
-            //para intemrromper o loop de dados, foi add o NewTonsoftJson
+            services.AddDbContext<ProEventosContext>(
+                context => context.UseSqlServer(Configuration.GetConnectionString("Default")));
 
             services.AddControllers()
-                    .AddNewtonsoftJson(
-                        x => x.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                    .AddNewtonsoftJson(x => x.SerializerSettings.ReferenceLoopHandling = 
+                        Newtonsoft.Json.ReferenceLoopHandling.Ignore
                     );
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddScoped<IEventoService, EventosService>();
-            services.AddScoped<IGeralPersit, GeralPersist>();
+            services.AddScoped<IEventoService, EventoService>();
+            services.AddScoped<IGeralPersist, GeralPersist>();
             services.AddScoped<IEventoPersist, EventoPersist>();
-
             services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProEventos.API", Version = "v1" });
             });
         }
-
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -56,18 +51,12 @@ namespace ProEventos.API
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "ProEventos.API v1"));
             }
-
             app.UseHttpsRedirection();
-
             app.UseRouting();
-
             app.UseAuthorization();
-
             app.UseCors(x => x.AllowAnyHeader()
-                              .AllowAnyMethod() 
+                              .AllowAnyMethod()
                               .AllowAnyOrigin());
-
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

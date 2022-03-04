@@ -13,10 +13,11 @@ import { EventoService } from '@app/services/evento.service';
 })
 export class EventoListaComponent implements OnInit {
 
-  public modalRef: BsModalRef;
+  modalRef: BsModalRef;
   public eventos: Evento[] = [];
   public eventosFiltrados: Evento[] = [];
-  public larguraImagem = 100;
+
+  public larguraImagem = 150;
   public margemImagem = 2;
   public exibirImagem = true;
   private filtroListado = '';
@@ -56,30 +57,35 @@ export class EventoListaComponent implements OnInit {
   }
 
   public getEventos(): void {
-    this.eventoService.getEvento().subscribe({
+    this.eventoService.getEventos().subscribe({
       next: (eventos: Evento[]) => {
         this.eventos = eventos;
         this.eventosFiltrados = this.eventos;
       },
+
       error: (error: any) => {
         this.spinner.hide();
-        this.toastr.error('Erro ao Carregar os Eventos', 'Erro!');
+        this.toastr.error('Erro ao carregar os Eventos', 'Erro!');
       },
       complete: () => this.spinner.hide()
     });
+
   }
+
   openModal(template: TemplateRef<any>): void {
     this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
   }
+
   confirm(): void {
     this.modalRef.hide();
     this.toastr.success('O Evento foi deletado com Sucesso.', 'Deletado!');
   }
+
   decline(): void {
     this.modalRef.hide();
   }
- detalheEvento(id: number): void{
+
+  detalheEvento(id: number): void{
     this.router.navigate([`eventos/detalhe/${id}`]);
   }
-
 }

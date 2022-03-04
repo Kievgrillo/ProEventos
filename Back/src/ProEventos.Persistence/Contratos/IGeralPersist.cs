@@ -3,7 +3,7 @@ using ProEventos.Domain;
 
 namespace ProEventos.Persistence.Contratos
 {
-    public interface IGeralPersit
+    public interface IGeralPersist
     {
          void Add<T>(T entity) where T: class;
          void Update<T>(T entity) where T: class;

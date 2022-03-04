@@ -13,29 +13,29 @@
   <div class="pb-2 d-block d-md-none">
     <h3 class="border-bottom">Cadastro de Usuário</h3>
   </div>
-  <div class="form-row">
-    <div class="form-group col-sm-6 mb-2">
+  <div class="row g-2">
+    <div class="col-6 mb-4 " style="display: inline-block;">
       <label>Primeiro Nome </label>
       <input type="text" class="form-control" formControlName="primeiroNome"
-        [ngClass]="{'is-invalid': f.primeiroNome.errors && f.primeiroNome.touched}"
-         placeholder="Insira o Primeiro nome" />
+        [ngClass]="cssValidator(f.primeiroNome)"
+         placeholder="insira o primeiro nome" />
       <div class="invalid-feedback">
         Primeiro Nome é obrigatório.
       </div>
     </div>
-    <div class="form-group col-sm-6 mb-2">
+    <div class="col-6 mb-4" style="display: inline-block;">
       <label>Último nome</label>
       <input type="text" class="form-control" formControlName="ultimoNome"
-        [ngClass]="{'is-invalid': f.ultimoNome.errors && f.ultimoNome.touched}" placeholder="Insira o Último nome" />
+        [ngClass]="cssValidator(f.ultimoNome)" placeholder="insira o último nome" />
       <div class="invalid-feedback">
         Último Nome é obrigatório.
       </div>
     </div>
   </div>
-  <div class="form-group mb-2">
+  <div class="col-12 mb-4">
     <label for="">Email:</label>
     <input class="form-control" type="text" formControlName="email"
-      [ngClass]="{'is-invalid': f.email.errors && f.email.touched}" placeholder="Insira o Nome Completo" />
+      [ngClass]="cssValidator(f.email)" placeholder="insira e-mail" />
     <div *ngIf="f.email.errors?.required && f.email.touched" class="invalid-feedback">
       e-mail é obrigatório.
     </div>
@@ -43,19 +43,19 @@
       Deve ser um e-mail válido.
     </div>
   </div>
-  <div class="form-group mb-2">
+  <div class="col-12 mb-4">
     <label for="">Usuario:</label>
     <input class="form-control" type="text" formControlName="usuario"
-      [ngClass]="{'is-invalid': f.usuario.errors && f.usuario.touched}" placeholder="Insira o nome de Usuário" />
+      [ngClass]="cssValidator(f.usuario)" placeholder="insira o usuário" />
     <div class="invalid-feedback">
       Usuário é obrigatório.
     </div>
   </div>
-  <div class="form-row">
-    <div class="form-group col-sm-6 mb-2">
+  <div class="row g-2">
+    <div class="col-6 mb-4" style="display: inline-block;">
       <label for="">Senha:</label>
       <input class="form-control" type="password" formControlName="senha"
-        [ngClass]="{'is-invalid': f.senha.errors && f.senha.touched}" placeholder="Digite uma Senha" />
+        [ngClass]="cssValidator(f.senha)" placeholder="insira a senha" />
       <div *ngIf="f.senha.errors?.required && f.senha.touched"
       class="invalid-feedback">
         Senha é obrigatório.
@@ -65,28 +65,28 @@
         Deve conter no mínimo 6 caracteres.
       </div>
     </div>
-    <div class="form-group col-sm-6 mb-2">
+    <div class="col-6 mb-4" style="display: inline-block;">
       <label for="">Confirmar Senha:</label>
       <input class="form-control" type="password" formControlName="confirmeSenha"
-        [ngClass]="{'is-invalid': f.confirmeSenha.errors && f.confirmeSenha.touched}" placeholder="Confirme a Senha" />
+        [ngClass]="cssValidator(f.confirmeSenha)" placeholder="confirme a senha" />
       <div *ngIf="f.confirmeSenha.errors?.required"
         class="invalid-feedback">
         Confirmar Senha é obrigatório.
       </div>
       <div *ngIf="f.confirmeSenha.errors?.mustMatch"
         class="invalid-feedback">
-        Repedir a senha é obrigatório.
+        Repetir a senha é obrigatório.
       </div>
     </div>
   </div>
-  <div class="form-row p-1 mb-3">
+  <div class="form-row">
     <div class="custom-control custom-checkbox">
       <input type="checkbox" class="custom-control-input" id="customCheck1">
       <label class="custom-control-label">Eu concordo com os <a href="#">Termos de Uso</a>.</label>
     </div>
   </div>
   <div class="form-row">
-    <div class="form-group col-12">
+    <div class="col">
       <button class="btn btn-lg btn-success btn-block px-5">
         Registar
       </button>
